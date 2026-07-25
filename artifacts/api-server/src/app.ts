@@ -1,14 +1,14 @@
 import express, { type Express, type Request, type Response } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import * as pinoHttp from "pino-http";
+import pinoHttp from "pino-http";
 import router from "./routes";
 import { logger } from "./lib/logger";
 
 const app: Express = express();
 
-app.use(
-  pinoHttp.default({
+const pinoHttpMiddleware = (pinoHttp as any)(
+  {
     logger,
     serializers: {
       req(req: Request) {
@@ -24,8 +24,10 @@ app.use(
         };
       },
     },
-  }),
+  }
 );
+
+app.use(pinoHttpMiddleware);
 app.use(cors({ credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
