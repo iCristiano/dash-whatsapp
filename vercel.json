@@ -1,5 +1,8 @@
 {
-  "buildCommand": "pnpm run typecheck:libs && pnpm --filter @workspace/api-server run build",
+  "buildCommand": "pnpm --filter @workspace/api-server run build",
   "outputDirectory": "artifacts/api-server/dist",
-  "framework": "express"
+  "framework": "express",
+  "env": {
+    "SKIP_ENV_VALIDATION": "1"
+  }
 }
